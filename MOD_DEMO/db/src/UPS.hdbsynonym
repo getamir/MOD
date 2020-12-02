@@ -1,0 +1,9 @@
+{
+  "MOD_DEMO.db::film": {
+    "target": {
+      "object": "film",
+      "schema": "MOD_DEMO",
+      "database": "HDB"
+    }
+  }
+}

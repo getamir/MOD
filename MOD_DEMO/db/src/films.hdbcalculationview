@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="MOD_DEMO.db::films" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="films"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="MOD_DEMO.db.data::sales_by_film_category">
+    <resourceUri>MOD_DEMO.db.data::sales_by_film_category</resourceUri>
+  </DataSource>
+  <DataSource id="MOD_DEMO.db.data::film_list">
+    <resourceUri>MOD_DEMO.db.data::film_list</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+    <viewAttributes>
+      <viewAttribute id="category"/>
+      <viewAttribute id="total_sales"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="MOD_DEMO.db.data::sales_by_film_category"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+    <viewAttributes>
+      <viewAttribute id="fid"/>
+      <viewAttribute id="title"/>
+      <viewAttribute id="category"/>
+      <viewAttribute id="price"/>
+      <viewAttribute id="length"/>
+      <viewAttribute id="rating"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="MOD_DEMO.db.data::film_list"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="fid" aggregationType="sum"/>
+      <viewAttribute id="title"/>
+      <viewAttribute id="category"/>
+      <viewAttribute id="price" aggregationType="sum"/>
+      <viewAttribute id="length" aggregationType="sum"/>
+      <viewAttribute id="rating"/>
+      <viewAttribute id="total_sales" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="fid" source="fid"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="title" source="title"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="category" source="category"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="price" source="price"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="length" source="length"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="rating" source="rating"/>
+    </input>
+    <input node="Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="total_sales" source="total_sales"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="category" source="category"/>
+    </input>
+    <joinAttribute name="category"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="fid" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="fid"/>
+      <keyMapping columnObjectName="Join_1" columnName="fid"/>
+    </attribute>
+    <attribute id="title" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="title"/>
+      <keyMapping columnObjectName="Join_1" columnName="title"/>
+    </attribute>
+    <attribute id="category" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="category"/>
+      <keyMapping columnObjectName="Join_1" columnName="category"/>
+    </attribute>
+    <attribute id="price" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="price"/>
+      <keyMapping columnObjectName="Join_1" columnName="price"/>
+    </attribute>
+    <attribute id="length" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="length"/>
+      <keyMapping columnObjectName="Join_1" columnName="length"/>
+    </attribute>
+    <attribute id="rating" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="rating"/>
+      <keyMapping columnObjectName="Join_1" columnName="rating"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="total_sales" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="total_sales"/>
+      <measureMapping columnObjectName="Join_1" columnName="total_sales"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221.11302679000914" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="356.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="356.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221.11302679000914" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_3" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="138.58837890625"/>
+    </shape>
+    <shape modelObjectName="Projection_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="139.1953125"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

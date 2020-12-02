@@ -1,0 +1,1 @@
+VIRTUAL TABLE "MOD_DEMO.db.data::sales_by_film_category" AT "PostgreSQL"."<NULL>"."public"."sales_by_film_category"
